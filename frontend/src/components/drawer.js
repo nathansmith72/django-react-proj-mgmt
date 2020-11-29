@@ -26,6 +26,7 @@ import Dashboard from "../pages/dashboard";
 import Projects from "../pages/projects";
 import Kanban from "../pages/Kanban";
 import Login from "../pages/Login";
+import AuthService from "../services/auth/authService"
 
 const drawerWidth = 240;
 
@@ -72,29 +73,37 @@ function ResponsiveDrawer(props) {
     setMobileOpen(!mobileOpen);
   };
 
+  const isLoggedIn = AuthService.isLoggedIn()
+
   const drawer = (
       <div>
         <div className={classes.toolbar} />
         <Divider />
         <List>
-          <Link to="/projects">
-            <ListItem button>
-              <ListItemIcon><AccountTreeIcon/></ListItemIcon>
-              <ListItemText primary={"Projects"} />
-            </ListItem>
-          </Link>
+          {isLoggedIn &&
+            <Link to="/projects">
+              <ListItem button>
+                <ListItemIcon><AccountTreeIcon/></ListItemIcon>
+                <ListItemText primary={"Projects"} />
+              </ListItem>
+            </Link>
+          }
+          {isLoggedIn &&
           <Link to="/khanban">
             <ListItem button>
               <ListItemIcon><AccountTreeIcon/></ListItemIcon>
-              <ListItemText primary={"Khanban"} />
+              <ListItemText primary={"Khanban"}/>
             </ListItem>
           </Link>
-          <Link to="/login">
-            <ListItem button>
-              <ListItemIcon><ExitToAppIcon/></ListItemIcon>
-              <ListItemText primary={"Login"} />
-            </ListItem>
-          </Link>
+          }
+          {!isLoggedIn &&
+            <Link to="/login">
+              <ListItem button>
+                <ListItemIcon><ExitToAppIcon/></ListItemIcon>
+                <ListItemText primary={"Login"} />
+              </ListItem>
+            </Link>
+          }
         </List>
       </div>
   );
