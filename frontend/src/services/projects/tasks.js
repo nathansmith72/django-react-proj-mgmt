@@ -12,6 +12,25 @@ class TaskService {
             return response.data;
         })
     }
+
+    createTask(task) {
+        return axios.post(
+            ROOT_URL + "/api/tasks/",
+            task,
+            {headers: authHeader()}
+        ).then(response => {
+            return response.data;
+        })
+    }
+
+    updateTask(task) {
+        return axios.get(
+            ROOT_URL + "/api/tasks/" + task.id + "/",
+            {headers: authHeader()}
+        ).then(response => {
+            return response.data;
+        })
+    }
 }
 
 export default new TaskService();
